@@ -1,0 +1,31 @@
+.row {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.row .col {
+  width: 33.333333%;
+  float: left;
+  position: relative;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.head-title {
+  font-weight: 400;
+  text-align: center;
+  margin: 30px 0;
+}
+
+.center {
+  display: block;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media not screen and (min-width: 970px) {
+  .row .col {
+    width: 100%;
+  }
+}
