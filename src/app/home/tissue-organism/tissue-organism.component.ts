@@ -58,7 +58,6 @@ export class TissueOrganismComponent implements OnInit {
           self.organisms = organisms;
           self.diseases = diseases;
 
-          console.log('requested')
           self.prepareData();
         }
       });
@@ -82,6 +81,10 @@ export class TissueOrganismComponent implements OnInit {
     self.tissues = self.tissues.filter(o => parseInt(o.value) >= 7);
     self.organisms = self.organisms.filter(o => parseInt(o.value) >= 20);
     self.diseases = self.diseases.filter(o => parseInt(o.value) >= 7);
+
+    self.tissues = self.removeDumplicate(self.tissues);
+    self.organisms = self.removeDumplicate(self.organisms);
+    self.diseases = self.removeDumplicate(self.diseases);
 
     self.draw();
   }
@@ -192,7 +195,6 @@ export class TissueOrganismComponent implements OnInit {
     d3.select("#" + self.bubChartName + "_radio_form")
       .selectAll('input')
       .on('change', function(d: any) {  
-        console.log(d);
         self.field = d3.select(this).attr('value');    // ignore this exception raised by editor
         self.change();
       });
@@ -322,8 +324,28 @@ export class TissueOrganismComponent implements OnInit {
             taxonomyid: arr[i].id
         });
     }
-    console.log({children: classes})
     return {children: classes};
+  }
+
+  private removeDumplicate(datasets) {
+    let newTiss = [];
+
+    datasets.forEach((value, num, arr) => {
+      let existed = false;
+
+      for(let i = 0;i < arr.length; i++) {
+        if (i === num) continue;
+
+        if (value.label === arr[i].label) {
+          value.value = '' + parseInt(value.value) + parseInt(arr[i].value);
+          existed = true;
+        }
+      }
+
+      if (!existed) newTiss.push(value);
+    })
+
+    return newTiss;
   }
 
   public outputErrorInfo(errDiv: string): void {

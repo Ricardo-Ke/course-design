@@ -53,7 +53,6 @@ export class HotWordsComponent implements OnInit {
       .defer(d3.json, webServiceUrl+'term/frequentlyTerm/list?size=40&domain=omics&field=sample_protocol')
       .await((error: any, omicsDes: FrequentlyTerm[], omicsDatap: FrequentlyTerm[], omicsSamp: FrequentlyTerm[]) => {
         this.drawWordCloud(error, omicsDes, omicsDatap, omicsSamp);
-        console.log('requested !!!')
       });
   }
 
